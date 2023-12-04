@@ -1,0 +1,29 @@
+Project Name: SwiftRoom Allocator
+
+Project Description: SwiftRoom Allocator streamlines hostel room allocation for college students. With instant room selection, change options, and an easy departure process, it simplifies the hostel experience, promoting efficiency for students and administrators alike.
+
+Key Functions:
+
+1. Instant Room Allocation:
+   - Students can log in and instantly secure a hostel room without a formal application process.
+
+2. User Login:
+   - Secure login using Student ID and password for swift access.
+
+3. Room Selection:
+   - View available rooms and select a preferred option effortlessly.
+
+4. Room Change Option:
+   - Option to change rooms if desired.
+
+5. Leave Hostel Option:
+   - Effortlessly initiate the process to leave the hostel.
+
+6. Profile Management:
+   - Manage personal information easily, including contact details.
+
+7. Admin Dashboard:
+   - Simplified dashboard for administrators to oversee room allocation and changes.
+
+8. Notifications:
+   - Send instant notifications to students regarding room allocation, changes, or departure.

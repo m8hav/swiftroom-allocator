@@ -1,0 +1,30 @@
+front end:
+	login with college alloted id
+	book room:
+		student tells preferences of room
+		searches (filter)
+		room cards show info:
+			available beds, total beds
+			hovering over bed shows student's course, batch and state
+	leave room:
+		confirm and leave
+
+tables required:
+	hostel rooms
+		room id primary key
+		floor (1/2/3/4)
+		number of beds
+		available beds
+		type (ac/non ac)
+
+	student
+		student id primary key
+		name
+		city
+		state
+		batch
+		course
+		phone number
+		email
+		hostel room id foreign key
+		hosteller (yes/no)
