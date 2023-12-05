@@ -28,3 +28,46 @@ tables required:
 		email
 		hostel room id foreign key
 		hosteller (yes/no)
+
+
+Pages required:
+  Admin Dashboard
+    - Add Room
+    - Add Student
+    - View Room
+    - View Student
+    - Logout
+
+  Student Dashboard
+    - View Room
+    - View Student
+    - Logout
+
+  Login Page
+    - Login
+
+  Register Pagead
+    - Register
+
+  Room Page
+    - View Room
+    - Book Room
+    - Leave Room
+
+  Student Page
+    - View Student
+    - Add Student
+    - Edit Student
+    - Delete Student
+
+  Room Page
+    - View Room
+    - Add Room
+    - Edit Room
+    - Delete Room
+
+  Logout Page
+    - Logout
+
+  404 Page
+    - 404
