@@ -31,6 +31,13 @@ tables required:
 
 
 Pages required:
+
+  Login Page
+    - Login
+
+  Register Page
+    - Register
+    
   Admin Dashboard
     - Add Room
     - Add Student
@@ -42,12 +49,6 @@ Pages required:
     - View Room
     - View Student
     - Logout
-
-  Login Page
-    - Login
-
-  Register Pagead
-    - Register
 
   Room Page
     - View Room
