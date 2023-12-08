@@ -1,0 +1,39 @@
+CRUD operations required in hostel room allotment system:
+
+1. Create
+  Admin:
+  - Create a new student
+  - Create a new room
+  Student:
+  - Create a new student
+
+2. Read
+  Admin:
+  - Read all students
+  - Read all rooms
+  - Read all students in a room
+  - Read all students in a hostel
+  Student:
+  - Read all rooms
+  - Read all students in any room - only state and batch
+  - Read all students in a room - if alloted
+  
+3. Update
+  Admin:
+  - Update a student
+  - Update a room
+  - Change a room
+  - Allot a room
+  - Deallot a room
+  Student:
+  - Get a room
+  - Leave a room
+  - Change a room
+  - Update a student
+  
+4. Delete
+  Admin:
+  - Delete a student
+  - Delete a room
+  Student:
+  - Delete a student

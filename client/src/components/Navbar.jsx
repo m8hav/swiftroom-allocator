@@ -3,6 +3,8 @@ import { AuthContext } from '../contexts/AuthContext';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 
 function Navbar() {
+  let {pathname} = useLocation();
+
   const { currentUser } = useContext(AuthContext);
 
   return (
@@ -11,7 +13,7 @@ function Navbar() {
         <Link to="/" className="navbar-brand">Swiftroom Allocator</Link>
         <div>
           {
-            currentUser &&
+            !(pathname.includes("/dashboard")) &&
             <Link to="/dashboard" className="navbar-brand">
               <button className="btn btn-outline-primary" type="submit">
                 Dashboard
@@ -19,7 +21,7 @@ function Navbar() {
             </Link>
           }
           {
-            !window.location.href.replace("?", "").endsWith("/login") &&
+            !(pathname.includes("/login")) &&
             <Link to={currentUser ? "/logout" : "/login"} className="navbar-brand">
               <button className="btn btn-outline-primary" type="submit">
                 {

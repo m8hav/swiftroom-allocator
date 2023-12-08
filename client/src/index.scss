@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@mixin cell-border($color) {
+  border: 1px solid $color;
+}
+
 html,
 body {
   margin: 0;
@@ -19,13 +23,31 @@ body {
 
   main {
     height: calc(100% - 60px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  }
+}
 
-    div {
-      // flex-basis: 100%;
+table {
+  tr {
+    &:nth-child(odd) {
+      background-color: #eee;
+    }
+
+    td {
+
+      &:first-child {
+        width: 40%;
+      }
+      &:nth-child(2) {
+        width: 60%;
+      }
+      
+      padding: 2px 10px;
+
+      input {
+        width: 100%;
+        background-color: transparent;
+        padding: 2px 10px;
+      }
     }
   }
 }

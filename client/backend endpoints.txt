@@ -1,0 +1,107 @@
+to get all users:
+localhost:4500/users - GET
+
+full server code:
+
+const express = require('express');
+const app = express();
+
+fetching users from mysql database:
+const users = [
+    { id: 1, name: 'user1' },
+    { id: 2, name: 'user2' },
+    { id: 3, name: 'user3' },
+    { id: 4, name: 'user4' },
+    { id: 5, name: 'user5' },
+    { id: 6, name: 'user6' },
+    { id: 7, name: 'user7' },
+    { id: 8, name: 'user8' },
+    { id: 9, name: 'user9' },
+    { id: 10, name: 'user10' },
+    { id: 11, name: 'user11' },
+    { id: 12, name: 'user12' },
+    { id: 13, name: 'user13' },
+    { id: 14, name: 'user14' },
+    { id: 15, name: 'user15' },
+    { id: 16, name: 'user16' },
+    { id: 17, name: 'user17' },
+    { id: 18, name: 'user18' },
+    { id: 19, name: 'user19' },
+    { id: 20, name: 'user20' },
+    { id: 21, name: 'user21' },
+    { id: 22, name: 'user22' },
+    { id: 23, name: 'user23' },
+    { id: 24, name: 'user24' },
+    { id: 25, name: 'user25' },
+    { id: 26, name: 'user26' },
+    { id: 27, name: 'user27' },
+    { id: 28, name: 'user28' },
+    { id: 29, name: 'user29' },
+    { id: 30, name: 'user30' },
+    { id: 31, name: 'user31' },
+    { id: 32, name: 'user32' },
+    { id: 33, name: 'user33' },
+    { id: 34, name: 'user34' },
+    { id: 35, name: 'user35' }
+];
+
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
+
+// to get all users
+app.get('/users', (req, res) => {
+    res.send(users);
+});
+
+// to get a specific user
+app.get('/users/:id', (req, res) => {
+    const user = users.find(user => user.id === parseInt(req.params.id));
+    if (!user) res.status(404).send('The user with the given ID was not found.');
+    res.send(user);
+});
+
+// to create a user
+app.post('/users', (req, res) => {
+    const user = {
+        id: users.length + 1,
+        name: req.body.name
+    };
+    users.push(user);
+    res.send(user);
+});
+
+// to update a user
+app.put('/users/:id', (req, res) => {
+    const user = users.find(user => user.id === parseInt(req.params.id));
+    if (!user) res.status(404).send('The user with the given ID was not found.');
+
+    user.name = req.body.name;
+    res.send(user);
+});
+
+// to delete a user
+app.delete('/users/:id', (req, res) => {
+    const user = users.find(user => user.id === parseInt(req.params.id));
+    if (!user) res.status(404).send('The user with the given ID was not found.');
+
+    const index = users.indexOf(user);
+    users.splice(index, 1);
+
+    res.send(user);
+});
+
+to get a specific user:
+localhost:4500/users/:id - GET
+
+to create a user:
+localhost:4500/users - POST
+
+to update a user:
+localhost:4500/users/:id - PUT
+
+to delete a user:
+localhost:4500/users/:id - DELETE
+
+const port = process.env.PORT || 4500;
+app.listen(port, () => console.log(`Listening on port ${port}...`));

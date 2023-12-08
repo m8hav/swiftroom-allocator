@@ -1,15 +1,20 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const { setCurrentUser } = useContext(AuthContext);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
   const [errMsg, setErrMsg] = useState("");
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log("Login page")
+    if (currentUser) navigate('/dashboard')
+  }, [])
+
   const handleSubmit = (e) => {
-    
+
     e.preventDefault();
 
     for (let index in Array.from(e.target)) {
@@ -31,9 +36,15 @@ function Login() {
       uid: "1",
       name: e.target[0].value,
       type: e.target[2].value,
+      phone: "1234567890",
+      email: "bart@gmail.com",
       city: "Mumbai",
       state: "Maharashtra",
-      
+      batch: "2020",
+      course: "B.E.",
+      branch: "CSE",
+      hosteller: false,
+      room: "101",
     })
 
     navigate('/dashboard');

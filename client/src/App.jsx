@@ -1,38 +1,24 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Logout from "./pages/Logout"
 import { Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
-import Navbar from './pages/Navbar'
-import { AuthContext } from './contexts/AuthContext'
-import StudentDashboard from './pages/StudentDashboard'
+import Navbar from './components/Navbar'
 import Home from './pages/Home'
-import ProtectedRoute from './ProtectedRoute'
-import AdminDashboard from './pages/AdminDashboard'
+import Dashboard from './pages/Dashboard'
 
 function App() {
 
-  const { currentUser } = useContext(AuthContext);
-
-  const Dashboard = () => {
-    return (
-      <ProtectedRoute>
-        {
-          currentUser?.type.toLowerCase() == "student"
-            ? <StudentDashboard />
-            : <AdminDashboard />
-        }
-      </ProtectedRoute>
-    )
-  }
   return (
     <>
       <Navbar />
-      <main>
+      <main className='flex justify-around items-center max-w-screen-lg m-auto'>
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/login' element={<Login />}></Route>
-          <Route path='/logout' element={<Logout />}></Route>
+          <Route path='*'>
+            <Route index element={<Home />} />
+            <Route path='dashboard/*' element={<Dashboard />} />
+            <Route path='login' element={<Login />}></Route>
+            <Route path='logout' element={<Logout />}></Route>
+          </Route>
         </Routes>
       </main>
     </>
