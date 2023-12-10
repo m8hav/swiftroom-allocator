@@ -2,19 +2,26 @@ create database swiftroom;
 use swiftroom;
 
 CREATE TABLE students (
-    student_id BIGINT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(40) NOT NULL,
-    phone BIGINT NOT NULL,
-    state VARCHAR(50) NOT NULL,
-    batch INT NOT NULL,
-    course VARCHAR(20) NOT NULL
+  student_id BIGINT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(40) NOT NULL,
+  phone BIGINT NOT NULL,
+  state VARCHAR(50) NOT NULL,
+  batch INT NOT NULL,
+  course VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE hostel_admins (
+  hostel_admin_id BIGINT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(40) NOT NULL,
+  hashed_password VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE hostel_students (
   hostel_student_id INT PRIMARY KEY AUTO_INCREMENT,
   student_id BIGINT NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL,
+  hashed_password VARCHAR(255) NOT NULL,
   registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
@@ -194,6 +201,7 @@ values
 ;
 
 select * from students;
+select * from hostel_admins;
 select * from hostel_students;
 select * from hostel_rooms;
 select * from hostel_allocation;

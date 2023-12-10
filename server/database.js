@@ -44,6 +44,194 @@ export async function checkStudentRegisteredInHostel(studentId) {
   }
 }
 
+// Function to check if an admin is registered in the hostel
+export async function checkAdminRegisteredInHostel(adminId) {
+  try {
+    const [admin] = await pool.query('SELECT * FROM hostel_admins WHERE hostel_admin_id = ?', [adminId]);
+    return admin.length > 0;
+  } catch (error) {
+    console.error('Error in checkAdminRegistered:', error.message);
+    return false;
+  }
+
+}
+
+// Function to get admin details
+export async function getAdminDetails(adminId) {
+  try {
+    // Check if the admin is registered in the hostel
+    if (!(await checkAdminRegisteredInHostel(adminId))) {
+      return {
+        success: false,
+        message: 'Admin is not registered in the hostel.'
+      };
+    }
+    
+    const [adminDetails] = await pool.query('SELECT * FROM hostel_admins WHERE hostel_admin_id = ?', [adminId]);
+
+    return {
+      success: true,
+      data: adminDetails[0]
+    };
+  } catch (error) {
+    console.error('Error in getAdminDetails:', error.message);
+    return {
+      success: false,
+      message: 'Something went wrong.'
+    };
+  }
+}
+
+// Function to get all admins details
+export async function getAllAdminsDetails() {
+  try {
+    // Get all admins
+    const [admins] = await pool.query('SELECT * FROM hostel_admins');
+
+    // Get details for each admin
+    const adminsDetails = await Promise.all(admins.map(async (admin) => {
+      return (await getAdminDetails(admin.hostel_admin_id)).data;
+    }));
+
+    return {
+      success: true,
+      data: adminsDetails
+    };
+  } catch (error) {
+    console.error('Error in getAllAdminsDetails:', error.message);
+    return {
+      success: false,
+      message: 'Something went wrong.'
+    };
+  }
+}
+
+// Function to register admin in hostel
+export async function registerAdminInHostel(adminId, name, email, hashedPassword) {
+  if (!adminId || !name || !email || !hashedPassword)
+    return {
+      success: false, message: 'Invalid parameters.'
+    };
+  try {
+    // Check if the admin is already registered in the hostel
+    if (await checkAdminRegisteredInHostel(adminId)) {
+      return {
+        success: false,
+        message: 'Admin is already registered in the hostel.'
+      };
+    }
+
+    console.log("registering now")
+
+    // Register the admin in the hostel
+    await pool.query('INSERT INTO hostel_admins (hostel_admin_id, name, email, hashed_password) VALUES (?, ?, ?, ?)', [adminId, name, email, hashedPassword]);
+
+    return {
+      success: true,
+      data: (await getAdminDetails(adminId)).data
+    };
+  } catch (error) {
+    console.error('Error in registerAdminInHostel:', error.message);
+    return {
+      success: false,
+      message: 'An error occurred while registering the admin in the hostel.'
+    };
+  }
+}
+
+// Function to update admin details
+export async function updateAdminDetails(adminId, name, email) {
+  if (!adminId || !name || !email)
+    return {
+      success: false, message: 'Invalid parameters.'
+    };
+  try {
+    // Check if the admin exists
+    if (!(await checkAdminRegisteredInHostel(adminId))) {
+      return {
+        success: false,
+        message: 'Admin does not exist.'
+      };
+    }
+
+    // update the admin details
+    await pool.query('UPDATE hostel_admins SET name = ?, email = ? WHERE hostel_admin_id = ?', [name, email, adminId]);
+
+    return {
+      success: true,
+      data: (await getAdminDetails(adminId)).data
+    };
+  } catch (error) {
+    console.error('Error in updateAdminDetails:', error.message);
+    return {
+      success: false,
+      message: 'Something went wrong.'
+    };
+  }
+}
+
+// Function to remove admin from hostel
+export async function removeAdminFromHostel(adminId) {
+  try {
+    // Check if the admin exists
+    if (!(await checkAdminRegisteredInHostel(adminId))) {
+      return {
+        success: false,
+        message: 'Admin does not exist.'
+      };
+    }
+
+    // Remove the admin from the hostel
+    await pool.query('DELETE FROM hostel_admins WHERE hostel_admin_id = ?', [adminId]);
+
+    return {
+      success: true,
+      message: 'Admin removed successfully.'
+    };
+  } catch (error) {
+    console.error('Error in removeAdminFromHostel:', error.message);
+    return {
+      success: false,
+      message: 'An error occurred while removing the admin from the hostel.'
+    };
+  }
+}
+
+// Function to get student hashed password
+export async function getHostelStudentHashedPassword(studentId) {
+  try {
+    // Check if the student exists
+    if (!(await checkStudentExists(studentId))) {
+      return {
+        success: false,
+        message: 'Student does not exist.'
+      };
+    }
+
+    // Check if the student is registered in the hostel
+    if (!(await checkStudentRegisteredInHostel(studentId))) {
+      return {
+        success: false,
+        message: 'Student is not registered in the hostel.'
+      };
+    }
+
+    // Get the student's hashed password
+    const [student] = await pool.query('SELECT hashed_password FROM hostel_students WHERE student_id = ?', [studentId]);
+
+    return {
+      success: true,
+      data: student[0].hashed_password
+    };
+  } catch (error) {
+    console.error('Error in getStudentHashedPassword:', error.message);
+    return {
+      success: false,
+      message: 'Something went wrong.'
+    };
+  }
+}
+
 // Function to get student details
 export async function getStudentDetails(studentId) {
   try {
@@ -135,7 +323,7 @@ export async function updateStudentDetails(studentId, name, email, phone, state,
 }
 
 // Function to register a student in the hostel
-export async function registerStudentInHostel(studentId) {
+export async function registerStudentInHostel(studentId, hashedPassword) {
   try {
     // Check if the student exists
     if (!(await checkStudentExists(studentId))) {
@@ -154,7 +342,7 @@ export async function registerStudentInHostel(studentId) {
     }
 
     // Register the student in the hostel
-    await pool.query('INSERT INTO hostel_students (student_id) VALUES (?)', [studentId]);
+    await pool.query('INSERT INTO hostel_students (student_id, hashed_password) VALUES (?, ?)', [studentId, hashedPassword]);
 
     return {
       success: true,
@@ -686,7 +874,8 @@ export async function getAllRoomsDetails(filters = {}, showStudentPrivateDetails
 // console.log(await updateRoomDetails(501, 5, 5, false));
 // console.log(await getAllStudentsInHostel())
 // console.log((await getAllRoomsDetails({ floor: 1, beds: 1, bedsAvailable: true }, true)).data.length);
-
+// console.log(await registerAdminInHostel(22, "Gujrot", "gujrot@gmail.com", "34567890"));
+// console.log(await getAdminDetails(11));
 
 
 
@@ -694,6 +883,8 @@ export async function getAllRoomsDetails(filters = {}, showStudentPrivateDetails
 // console.log(await checkStudentExists(2211981191));
 // console.log(await checkRoomExists(501));
 // console.log(await checkStudentRegisteredInHostel(2111981102));
+// console.log(await getHostelStudentHashedPassword(2111981101));
+// console.log(await checkAdminRegisteredInHostel(11));
 
 // completed apis
 // console.log((await getRoomDetails(102, false)).data);
@@ -711,3 +902,8 @@ export async function getAllRoomsDetails(filters = {}, showStudentPrivateDetails
 // console.log(await getStudentRoom(2111981101));
 // console.log(await changeStudentRoom(2111981101, 102));
 // console.log(await leaveRoom(2111981101));
+// console.log(await registerAdminInHostel(22, "Gujrot", "gujrot@gmail.com", "34567890"));
+// console.log(await getAdminDetails(11));
+// console.log(await getAllAdminsDetails());
+// console.log(await updateAdminDetails(11, "Gujrot", "gujrot@gmail.com"))
+// console.log(await removeAdminFromHostel(22));
