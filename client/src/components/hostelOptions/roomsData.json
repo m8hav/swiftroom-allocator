@@ -1,92 +1,92 @@
 [
   {
-    "roomId": 1,
-    "floorNo": 1,
-    "numberOfBeds": 2,
+    "room_id": 1,
+    "floor": 1,
+    "beds": 2,
     "availableBeds": 1,
     "ac": true
   },
   {
-    "roomId": 2,
-    "floorNo": 1,
-    "numberOfBeds": 2,
+    "room_id": 2,
+    "floor": 1,
+    "beds": 2,
     "availableBeds": 1,
     "ac": true
   },
   {
-    "roomId": 3,
-    "floorNo": 1,
-    "numberOfBeds": 2,
+    "room_id": 3,
+    "floor": 1,
+    "beds": 2,
     "availableBeds": 1,
     "ac": true
   },
   {
-    "roomId": 4,
-    "floorNo": 1,
-    "numberOfBeds": 2,
+    "room_id": 4,
+    "floor": 1,
+    "beds": 2,
     "availableBeds": 1,
     "ac": true
   },
   {
-    "roomId": 5,
-    "floorNo": 1,
-    "numberOfBeds": 2,
+    "room_id": 5,
+    "floor": 1,
+    "beds": 2,
     "availableBeds": 1,
     "ac": true
   },
   {
-    "roomId": 6,
-    "floorNo": 1,
-    "numberOfBeds": 2,
+    "room_id": 6,
+    "floor": 1,
+    "beds": 2,
     "availableBeds": 1,
     "ac": true
   },
   {
-    "roomId": 7,
-    "floorNo": 1,
-    "numberOfBeds": 2,
+    "room_id": 7,
+    "floor": 1,
+    "beds": 2,
     "availableBeds": 1,
     "ac": true
   },
   {
-    "roomId": 8,
-    "floorNo": 1,
-    "numberOfBeds": 2,
+    "room_id": 8,
+    "floor": 1,
+    "beds": 2,
     "availableBeds": 1,
     "ac": true
   },
   {
-    "roomId": 9,
-    "floorNo": 1,
-    "numberOfBeds": 2,
+    "room_id": 9,
+    "floor": 1,
+    "beds": 2,
     "availableBeds": 1,
     "ac": false
   },
   {
-    "roomId": 10,
-    "floorNo": 1,
-    "numberOfBeds": 2,
+    "room_id": 10,
+    "floor": 1,
+    "beds": 2,
     "availableBeds": 1,
     "ac": false
   },
   {
-    "roomId": 11,
-    "floorNo": 2,
-    "numberOfBeds": 2,
+    "room_id": 11,
+    "floor": 2,
+    "beds": 2,
     "availableBeds": 1,
     "ac": false
   },
   {
-    "roomId": 12,
-    "floorNo": 2,
-    "numberOfBeds": 2,
+    "room_id": 12,
+    "floor": 2,
+    "beds": 2,
     "availableBeds": 1,
     "ac": false
   },
   {
-    "roomId": 13,
-    "floorNo": 2,
-    "numberOfBeds": 2,
+    "room_id": 13,
+    "floor": 2,
+    "beds": 2,
     "availableBeds": 1,
     "ac": false
   }

@@ -13,21 +13,16 @@ function GetRoom() {
 
   const navigate = useNavigate();
 
+  // const fetchRooms = async () => {
+  //   const response = await fetch("http://localhost:8080/api/hostel/rooms");
+  //   const data = await response.json();
+  //   // console.log(data)
+  //   setRooms(data);
+  // }
+
   useEffect(() => {
-    // const response = await fetch("http://localhost:5000/rooms");
-    // const data = await response.json();
-    // setRooms(data);
-
-    // [
-    //   {
-    //     "roomId": 1,
-    //     "floorNo": 1,
-    //     "numberOfBeds": 2,
-    //     "availableBeds": 1,
-    //     "ac": true
-    //   }  
-    // ]
-
+    // fetchRooms();
+    
     let newRoomsData = roomsData;
     if (acFilter != "DEFAULT") {
       newRoomsData = newRoomsData.filter(room => room.ac == (acFilter == "true"))
@@ -87,14 +82,14 @@ function GetRoom() {
         {
           rooms.map((room) =>
           (
-            <table className='text-left border border-separate border-spacing-2' key={room.roomId}>
+            <table className='text-left border border-separate border-spacing-2' key={room.room_id}>
               <tbody>
                 <tr>
                   <td>
                     <p>Room ID:</p>
                   </td>
                   <td>
-                    <p>{room.roomId}</p>
+                    <p>{room.room_id}</p>
                   </td>
                 </tr>
                 <tr>
@@ -102,7 +97,7 @@ function GetRoom() {
                     <p>Floor:</p>
                   </td>
                   <td>
-                    <p>{room.floorNo}</p>
+                    <p>{room.floor}</p>
                   </td>
                 </tr>
                 <tr>
@@ -110,7 +105,7 @@ function GetRoom() {
                     <p>Number of Beds:</p>
                   </td>
                   <td>
-                    <p>{room.numberOfBeds}</p>
+                    <p>{room.beds}</p>
                   </td>
                 </tr>
                 <tr>
@@ -131,7 +126,7 @@ function GetRoom() {
                 </tr>
                 <tr>
                   <td colSpan={2} className='flex justify-center'>
-                    <button onClick={() => handleGetRoom(room.roomId)} className='btn btn-outline-primary m-auto'>Get Room</button>
+                    <button onClick={() => handleGetRoom(room.room_id)} className='btn btn-outline-primary m-auto'>Get Room</button>
                   </td>
                 </tr>
               </tbody>

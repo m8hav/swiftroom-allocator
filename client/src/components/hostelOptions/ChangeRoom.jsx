@@ -46,14 +46,14 @@ function ChangeRoom() {
         {
           rooms.map((room) =>
           (
-            <table className='text-left border border-separate border-spacing-2' key={room.roomId}>
+            <table className='text-left border border-separate border-spacing-2' key={room.room_id}>
               <tbody>
                 <tr>
                   <td>
                     <p>Room ID:</p>
                   </td>
                   <td>
-                    <p>{room.roomId}</p>
+                    <p>{room.room_id}</p>
                   </td>
                 </tr>
                 <tr>
@@ -61,7 +61,7 @@ function ChangeRoom() {
                     <p>Floor:</p>
                   </td>
                   <td>
-                    <p>{room.floorNo}</p>
+                    <p>{room.floor}</p>
                   </td>
                 </tr>
                 <tr>
@@ -69,7 +69,7 @@ function ChangeRoom() {
                     <p>Number of Beds:</p>
                   </td>
                   <td>
-                    <p>{room.numberOfBeds}</p>
+                    <p>{room.beds}</p>
                   </td>
                 </tr>
                 <tr>
@@ -90,7 +90,7 @@ function ChangeRoom() {
                 </tr>
                 <tr>
                   <td colSpan={2} className='flex justify-center'>
-                    <button onClick={() => handleChangeRoom(room.roomId)} className='btn btn-outline-primary m-auto'>Switch to this Room</button>
+                    <button onClick={() => handleChangeRoom(room.room_id)} className='btn btn-outline-primary m-auto'>Switch to this Room</button>
                   </td>
                 </tr>
               </tbody>

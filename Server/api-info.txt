@@ -1,0 +1,37 @@
+1. **Create**
+   - Admin:
+     - Register student in hostel (`POST /api/admin/register-student-in-hostel`)
+     - Create a new room (`POST /api/admin/create-room`)
+   - Student:
+     - Register student in hostel (`POST /api/student/register-in-hostel`)
+
+2. **Read**
+   - Admin:
+     - Read all rooms (`GET /api/admin/rooms`)
+     - Read all students (`GET /api/admin/students`)
+   - Student:
+     - Read own room (`GET /api/student/own-room`)
+     - Read all rooms (without students sensitive data) (`GET /api/student/all-rooms`)
+
+3. **Update**
+   - Admin:
+     - Change a student room (`PUT /api/admin/change-student-room/:studentId`)
+     - Allot a room (`PUT /api/admin/allot-room/:studentId`)
+     - Deallot a room (`PUT /api/admin/deallot-room/:studentId`)
+   - Student:
+     - Allot a room (`PUT /api/student/allot-room`)
+     - Leave a room (`PUT /api/student/leave-room/:studentId`)
+     - Change a room (`PUT /api/student/change-room/:studentId`)
+     - Update a student (`PUT /api/student/update/:studentId`)
+
+4. **Delete**
+   - Admin:
+     - Delete a student (`DELETE /api/admin/delete-student/:studentId`)
+     - Delete a room (`DELETE /api/admin/delete-room/:roomId`)
+   - Student:
+     - Delete a student (`DELETE /api/student/delete/:studentId`)
+
+For the filtered queries, you can include query parameters in the URLs for the GET requests. For example:
+- To filter rooms based on floor and AC status: `GET /api/admin/rooms?floor=2&ac=true`
+- To filter students based on the batch: `GET /api/admin/students?batch=2022`
+- To get all rooms available for a student to select (filtered by floor, AC status, and available beds): `GET /api/student/available-rooms?floor=2&ac=true&availableBeds=2`

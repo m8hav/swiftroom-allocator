@@ -1,153 +1,274 @@
-const express = require('express'); 
-const bodyParser = require('body-parser');
+import express from 'express'
+import dotenv from 'dotenv';
+import cors from 'cors';
+import {
+  addRoom,
+  allocateRoomToStudent,
+  changeStudentRoom,
+  getAllRoomsDetails,
+  getAllStudentsDetails,
+  getAllStudentsInHostel,
+  getRoomDetails,
+  getStudentDetails,
+  getStudentRoom,
+  leaveRoom,
+  registerStudentInHostel,
+  removeRoom,
+  removeStudentFromHostel,
+  updateRoomDetails,
+  updateStudentDetails
+} from './database.js';
 
+dotenv.config();
+const PORT = process.env.PORT || 8080;
 
+const app = express();
 
-const app = express(); 
-const PORT = 4500;
+// app.use(cors({
+//   origin: 'http://localhost:3000',
+//   credentials: true
+// }));
+app.use(cors());
+app.use(express.json());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.text());
-
-var mysql = require('mysql');
-
-// create sql connection
-var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Pranav@125",
-    database:"swiftroom",
-  });
-
-// connect to database
-  connection.connect((err) => {
-    if (err) {
-      console.error('Error connecting to MySQL:', err);
-      return;
+// Get all rooms, with optional filters
+app.get('/api/hostel/rooms', async (req, res) => {
+  try {
+    const filters = req.query;
+    const result = await getAllRoomsDetails(filters, req.query.showStudentPrivateDetails);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
     }
-    console.log('Connected to MySQL');
-  });
- 
-
-app.get('/', (req, res)=>{ 
-    res.status(200); 
-    res.send("Welcome to root URL of Server"); 
-}); 
-
-// for admin to get details of all students
-app.get("/student", (req, res) => {
-    connection.query('SELECT * FROM student where hosteller=true', (error, results, fields) => {
-        if (error) {
-          console.error('Error executing SELECT query: ', error);
-          res.status(500).json({ error: 'Internal Server Error' });
-          return;
-        }
-        res.json(results);
-      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
 });
 
-// for admin to get details entire hostel
-app.get("/hostel", (req, res) => {
-    connection.query('SELECT * FROM hostel', (error, results, fields) => {
-        if (error) {
-          console.error('Error executing SELECT query: ', error);
-          res.status(500).json({ error: 'Internal Server Error' });
-          return;
-        }
-        res.json(results);
-      });
+// Get a specific room by id
+app.get('/api/hostel/rooms/:id', async (req, res) => {
+  try {
+    const result = await getRoomDetails(req.params.id, req.query.showStudentPrivateDetails);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Create a room
+app.post('/api/hostel/rooms', async (req, res) => {
+  try {
+    const result = await addRoom(req.body.roomId, req.body.floor, req.body.beds, req.body.ac);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Update a room
+app.put('/api/hostel/rooms/:id', async (req, res) => {
+  try {
+    const result = await updateRoomDetails(req.params.id, req.body.floor, req.body.beds, req.body.ac);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Remove a room
+app.delete('/api/hostel/rooms/:id', async (req, res) => {
+  try {
+    const result = await removeRoom(req.params.id);
+    if (result.success) {
+      res.status(200).json(result.message);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Get all students
+app.get('/api/students', async (req, res) => {
+  try {
+    const result = await getAllStudentsDetails();
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Get a specific student by id
+app.get('/api/students/:id', async (req, res) => {
+  try {
+    const result = await getStudentDetails(req.params.id);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Update student details
+app.put('/api/students/:id', async (req, res) => {
+  try {
+    const result = await updateStudentDetails(req.params.id, req.body.name, req.body.email, req.body.phone, req.body.state, req.body.batch, req.body.course);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Get all students in hostel
+app.get('/api/hostel/students', async (req, res) => {
+  try {
+    const result = await getAllStudentsInHostel();
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Register student in hostel
+app.post('/api/hostel/students', async (req, res) => {
+  try {
+    const result = await registerStudentInHostel(req.body.studentId);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Remove student from hostel
+app.delete('/api/hostel/students/:id', async (req, res) => {
+  try {
+    const result = await removeStudentFromHostel(req.params.id);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Allocate room to student
+app.post('/api/hostel/students/:id/room', async (req, res) => {
+  try {
+    const result = await allocateRoomToStudent(req.params.id, req.body.roomId);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message)
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Get student room details
+app.get('/api/hostel/students/:id/room', async (req, res) => {
+  try {
+    const result = await getStudentRoom(req.params.id);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message)
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Change student room
+app.put('/api/hostel/students/:id/room', async (req, res) => {
+  try {
+    const result = await changeStudentRoom(req.params.id, req.body.roomId);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message)
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Deallocate room from student
+app.delete('/api/hostel/students/:id/room', async (req, res) => {
+  try {
+    const result = await leaveRoom(req.params.id);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message)
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
 });
 
 
-// for admin to check rooms floor wise
-app.get("/floor/:id", (req, res) => {
-  const floorid=req.params.id;
-    connection.query('SELECT * FROM hostel where floor_no='+floorid+'', (error, results, fields) => {
-        if (error) {
-          console.error('Error executing SELECT query: ', error);
-          res.status(500).json({ error: 'Internal Server Error' });
-          return;
-        }
-        res.json(results);
-      });
-});
+// Default route
+app.get('/', (req, res) => {
+  res.send('Welcome to Swiftroom Allocator!')
+})
 
-// for admin to check total beds available in hostel
-app.get("/total_beds_avail", (req, res) => {
-    connection.query('SELECT sum(available_bed) from hostel', (error, results, fields) => {
-        if (error) {
-          console.error('Error executing SELECT query: ', error);
-          res.status(500).json({ error: 'Internal Server Error' });
-          return;
-        }
-        res.json(results);
-      });
-});
+// Error handling
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send("Something broke!")
+})
 
-
-// for admin to check beds available floor wise
-app.get("/beds_on_floor/:id", (req, res) => {
-  const floorid=req.params.id;
-    connection.query('SELECT sum(available_bed) from hostel where floor_no='+floorid+'', (error, results, fields) => {
-        if (error) {
-          console.error('Error executing SELECT query: ', error);
-          res.status(500).json({ error: 'Internal Server Error' });
-          return;
-        }
-        res.json(results);
-      });
-});
-
-
-// for client to get desired rooms based on filter
-app.get("/clientquery",(req,res)=>{
-  const floor_num=3;
-  const bed_num=3;
-  const ac=1;
-  let query;
-    if((floor_num>=1 && floor_num<=4) && (bed_num>=2 && bed_num<=4) &&(ac==0 || ac==1)){
-      query="select * from hostel where floor_no="+floor_num.toString()+" and num_bed="+bed_num.toString()+" and ac_room="+ac.toString()+"";
-    }
-    else if(floor_num>=1 && floor_num<=4 &&(ac==0 || ac==1)){
-      query="select * from hostel where floor_no="+floor_num.toString()+" and ac_room="+ac.toString()+"";
-    }
-    else if(bed_num>=2 && bed_num<=4 &&(ac==0 || ac==1)){
-      query="select * from hostel where num_bed="+bed_num.toString()+" and ac_room="+ac.toString()+"";
-    }
-    else if(floor_num>=1 && floor_num<=4){
-      query="select * from hostel where floor_no="+floor_num.toString()+"";
-    }
-    else if(bed_num>=2 && bed_num<=4){
-      query="select * from hostel where num_bed="+bed_num.toString()+"";
-    }
-    else if(ac==0 || ac==1){
-      query="select * from hostel where ac_room="+ac.toString()+"";
-    }
-    else{
-      query="select * form hostel";
-    }
-
-    connection.query(query, (error, results, fields) => {
-      if (error) {
-        console.error('Error executing SELECT query: ', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-        return;
-      }
-  
-      res.json(results);
-  });
-});
-
-// queries left:
-// updation query which will run after a student books a room i.e. in student table hosteller status to true and room num in foreign key
-
-
-  
-app.listen(PORT, (error) =>{ 
-    if(!error) 
-        console.log("Server is Successfully Running,and App is listening on port "+ PORT) 
-    else 
-        console.log("Error occurred, server can't start", error); 
-    } 
-); 
+app.listen(PORT, () => {
+  console.log("Server is listening on port " + PORT)
+})
