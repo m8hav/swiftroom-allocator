@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv';
 import cors from 'cors';
+import bcrypt from 'bcrypt';
 import {
   addRoom,
   allocateRoomToStudent,
@@ -30,6 +31,136 @@ const app = express();
 // }));
 app.use(cors());
 app.use(express.json());
+
+
+
+// Register student in hostel
+app.post('/api/hostel/students', async (req, res) => {
+  try {
+    const result = await registerStudentInHostel(req.body.studentId);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Login student
+app.post('/api/hostel/students/login', async (req, res) => {
+  try {
+    const result = await getStudentDetails(req.body.studentId);
+    if (result.success) {
+      const student = result.data;
+      const passwordMatch = await bcrypt.compare(req.body.password, student.password);
+      if (passwordMatch) {
+        res.status(200).json(student);
+      } else {
+        res.status(400).send("Incorrect password");
+      }
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+
+});
+
+// Get all students in hostel
+app.get('/api/hostel/students', async (req, res) => {
+  try {
+    const result = await getAllStudentsInHostel();
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Remove student from hostel
+app.delete('/api/hostel/students/:id', async (req, res) => {
+  try {
+    const result = await removeStudentFromHostel(req.params.id);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Allocate room to student
+app.post('/api/hostel/students/:id/room', async (req, res) => {
+  try {
+    const result = await allocateRoomToStudent(req.params.id, req.body.roomId);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message)
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Get student room details
+app.get('/api/hostel/students/:id/room', async (req, res) => {
+  try {
+    const result = await getStudentRoom(req.params.id);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message)
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Change student room
+app.put('/api/hostel/students/:id/room', async (req, res) => {
+  try {
+    const result = await changeStudentRoom(req.params.id, req.body.roomId);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message)
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
+// Deallocate room from student
+app.delete('/api/hostel/students/:id/room', async (req, res) => {
+  try {
+    const result = await leaveRoom(req.params.id);
+    if (result.success) {
+      res.status(200).json(result.data);
+    } else {
+      res.status(400).send(result.message)
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something broke!");
+  }
+});
+
 
 // Get all rooms, with optional filters
 app.get('/api/hostel/rooms', async (req, res) => {
@@ -145,111 +276,6 @@ app.put('/api/students/:id', async (req, res) => {
       res.status(200).json(result.data);
     } else {
       res.status(400).send(result.message);
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Something broke!");
-  }
-});
-
-// Get all students in hostel
-app.get('/api/hostel/students', async (req, res) => {
-  try {
-    const result = await getAllStudentsInHostel();
-    if (result.success) {
-      res.status(200).json(result.data);
-    } else {
-      res.status(400).send(result.message);
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Something broke!");
-  }
-});
-
-// Register student in hostel
-app.post('/api/hostel/students', async (req, res) => {
-  try {
-    const result = await registerStudentInHostel(req.body.studentId);
-    if (result.success) {
-      res.status(200).json(result.data);
-    } else {
-      res.status(400).send(result.message);
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Something broke!");
-  }
-});
-
-// Remove student from hostel
-app.delete('/api/hostel/students/:id', async (req, res) => {
-  try {
-    const result = await removeStudentFromHostel(req.params.id);
-    if (result.success) {
-      res.status(200).json(result.data);
-    } else {
-      res.status(400).send(result.message);
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Something broke!");
-  }
-});
-
-// Allocate room to student
-app.post('/api/hostel/students/:id/room', async (req, res) => {
-  try {
-    const result = await allocateRoomToStudent(req.params.id, req.body.roomId);
-    if (result.success) {
-      res.status(200).json(result.data);
-    } else {
-      res.status(400).send(result.message)
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Something broke!");
-  }
-});
-
-// Get student room details
-app.get('/api/hostel/students/:id/room', async (req, res) => {
-  try {
-    const result = await getStudentRoom(req.params.id);
-    if (result.success) {
-      res.status(200).json(result.data);
-    } else {
-      res.status(400).send(result.message)
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Something broke!");
-  }
-});
-
-// Change student room
-app.put('/api/hostel/students/:id/room', async (req, res) => {
-  try {
-    const result = await changeStudentRoom(req.params.id, req.body.roomId);
-    if (result.success) {
-      res.status(200).json(result.data);
-    } else {
-      res.status(400).send(result.message)
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Something broke!");
-  }
-});
-
-// Deallocate room from student
-app.delete('/api/hostel/students/:id/room', async (req, res) => {
-  try {
-    const result = await leaveRoom(req.params.id);
-    if (result.success) {
-      res.status(200).json(result.data);
-    } else {
-      res.status(400).send(result.message)
     }
   } catch (error) {
     console.error(error);
