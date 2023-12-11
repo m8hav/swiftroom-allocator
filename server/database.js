@@ -66,7 +66,7 @@ export async function getAdminDetails(adminId) {
         message: 'Admin is not registered in the hostel.'
       };
     }
-    
+
     const [adminDetails] = await pool.query('SELECT * FROM hostel_admins WHERE hostel_admin_id = ?', [adminId]);
 
     return {
@@ -815,7 +815,8 @@ export async function getAllStudentsInHostel() {
 
 // Function to get all rooms with filters
 export async function getAllRoomsDetails(filters = {}, showStudentPrivateDetails = false) {
-  const { floor, beds, ac, bedsAvailable } = filters;
+  // option to show only allocated rooms
+  const { floor, beds, ac, bedsAvailable, allocated } = filters;
   try {
     let query = 'SELECT * FROM hostel_rooms WHERE 1=1';
     let args = [];
@@ -833,6 +834,12 @@ export async function getAllRoomsDetails(filters = {}, showStudentPrivateDetails
     if (ac != undefined) {
       query += ' AND ac = ?';
       args.push(ac);
+    }
+
+    if (allocated != undefined) {
+      query += allocated
+        ? ' AND room_id IN (SELECT room_id FROM hostel_allocation WHERE leave_date IS NULL)'
+        : ' AND room_id NOT IN (SELECT room_id FROM hostel_allocation WHERE leave_date IS NULL)';
     }
 
     const [rooms] = await pool.query(query, args);
@@ -910,3 +917,4 @@ export async function getAllRoomsDetails(filters = {}, showStudentPrivateDetails
 // console.log(await getAllAdminsDetails());
 // console.log(await updateAdminDetails(11, "Gujrot", "gujrot@gmail.com"))
 // console.log(await removeAdminFromHostel(22));
+// console.log(await getAllRoomsDetails({ floor: 1, beds: 1, ac: 1, allocated: false }, true));

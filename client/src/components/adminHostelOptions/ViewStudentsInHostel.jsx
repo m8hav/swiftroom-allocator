@@ -26,9 +26,9 @@ function ViewStudentsInHostel() {
   }, [])
 
   return (
-    <div className='h-full'>
+    <>
       <h2 className='font-bold'>Students in Hostel</h2>
-      <div>
+      <div className='h-full overflow-y-auto'>
         {
           students &&
           students.map((student, index) => (
@@ -128,7 +128,7 @@ function ViewStudentsInHostel() {
           ))
         }
       </div>
-    </div>
+    </>
   )
 }
 

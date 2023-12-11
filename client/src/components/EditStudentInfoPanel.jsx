@@ -55,7 +55,7 @@ function EditStudentInfoPanel() {
   }
 
   return (
-    <div className="bg-body-primary border-2 h-full w-2/3 flex flex-col justify-center align-center p-4">
+    <div className="bg-body-primary border-2 h-full w-5/6 flex flex-col justify-center align-center p-4">
       <h2 className='mb-4 font-bold text-xl'>Edit User Info</h2>
       <table className='text-left border border-separate border-spacing-2'>
         <tbody>

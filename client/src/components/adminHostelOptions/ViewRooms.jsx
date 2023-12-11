@@ -68,8 +68,8 @@ function ViewRooms() {
         </select>
         <select value={acFilter} onChange={e => setAcFilter(e.target.value)} className='border border-gray-400 rounded-md'>
           <option value="DEFAULT">Both AC & Non-AC</option>
-          <option value={true}>AC</option>
-          <option value={false}>Non-AC</option>
+          <option value={1}>AC</option>
+          <option value={0}>Non-AC</option>
         </select>
         <select value={bedsFilter} onChange={e => setBedsFilter(e.target.value)} className='border border-gray-400 rounded-md'>
           <option value="DEFAULT">Any number of beds</option>

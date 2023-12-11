@@ -76,7 +76,7 @@ function Room() {
         room.studentsInRoom &&
         room.studentsInRoom.map((student, index) =>
         (
-          <table className='text-left border border-separate border-spacing-2'>
+          <table className='text-left border border-separate border-spacing-2' key={index}>
             <h2 className='text-left font-bold mt-4 my-2'>{index + 1}</h2>
             <tbody>
               <tr>

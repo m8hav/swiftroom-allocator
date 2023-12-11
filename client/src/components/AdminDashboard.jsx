@@ -7,6 +7,9 @@ import ViewAllStudents from './adminHostelOptions/ViewAllStudents';
 import ViewAllAllocatedRooms from './adminHostelOptions/ViewAllAllocatedRooms';
 import AddRoom from './adminHostelOptions/AddRoom';
 import RemoveRoom from './adminHostelOptions/RemoveRoom';
+import AllocateRoom from './adminHostelOptions/AllocateRoom';
+import ChangeRoom from './adminHostelOptions/ChangeRoom';
+import DeallocateRoom from './adminHostelOptions/DeallocateRoom';
 import AddStudent from './adminHostelOptions/AddStudent';
 import RemoveStudent from './adminHostelOptions/RemoveStudent';
 import AdminInfoPanel from './AdminInfoPanel';
@@ -28,14 +31,17 @@ function AdminDashboard() {
             <Routes>
               <Route path='/' element={<AdminHostelOptions />} />
               <Route path='/hostel/room/:id' element={<Room />} />
-              <Route path='/hostel/viewRooms' element={<ViewRooms />} />
-              <Route path='/hostel/viewAllStudents' element={<ViewAllStudents />} />
-              <Route path='/hostel/viewStudentsInHostel' element={<ViewStudentsInHostel />} />
-              <Route path='/hostel/viewAllAllocatedRooms' element={<ViewAllAllocatedRooms />} />
-              <Route path='/hostel/addRoom' element={<AddRoom />} />
-              <Route path='/hostel/removeRoom' element={<RemoveRoom />} />
-              <Route path='/hostel/addStudent' element={<AddStudent />} />
-              <Route path='/hostel/removeStudent' element={<RemoveStudent />} />
+              <Route path='/hostel/view-rooms' element={<ViewRooms />} />
+              <Route path='/hostel/view-all-students' element={<ViewAllStudents />} />
+              <Route path='/hostel/view-students-in-hostel' element={<ViewStudentsInHostel />} />
+              <Route path='/hostel/view-all-allocated-rooms' element={<ViewAllAllocatedRooms />} />
+              <Route path='/hostel/add-room' element={<AddRoom />} />
+              <Route path='/hostel/remove-room' element={<RemoveRoom />} />
+              <Route path='/hostel/allocate-room' element={<AllocateRoom />} />
+              <Route path='/hostel/change-room' element={<ChangeRoom />} />
+              <Route path='/hostel/deallocate-room' element={<DeallocateRoom />} />
+              <Route path='/hostel/add-student' element={<AddStudent />} />
+              <Route path='/hostel/remove-student' element={<RemoveStudent />} />
             </Routes>
             {
               !(pathname == "/dashboard") &&
