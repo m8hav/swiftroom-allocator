@@ -44,7 +44,7 @@ app.use(express.json());
 
 
 
-// Protected route that requires JWT authentication.
+// Protected route that requires JWT authentication
 app.get('/api/protected', authenticateToken, (req, res) => {
   res.json({ message: 'Protected route accessed successfully.', user: req.user });
 });
@@ -55,7 +55,7 @@ app.get('/api/protected/:id', authenticateToken, (req, res) => {
   res.json({ message: 'Protected route accessed successfully.', user: req.user });
 });
 
-// Middleware to authenticate JWT.
+// Middleware to authenticate JWT
 function authenticateToken(req, res, next) {
   const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
   if (!token) {
@@ -70,7 +70,7 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// Register admin in hostel.
+// Register admin in hostel
 app.post('/api/hostel/admins', async (req, res) => {
   const { id, name, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
