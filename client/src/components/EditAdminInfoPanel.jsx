@@ -19,7 +19,6 @@ function EditAdminInfoPanel() {
   }
 
   const handleSaveChanges = () => {
-
     const saveChanges = async () => {
       // put request to update admin details
       const response = await fetch(`http://localhost:8080/api/hostel/admins/${currentUser.hostel_admin_id}`, {
