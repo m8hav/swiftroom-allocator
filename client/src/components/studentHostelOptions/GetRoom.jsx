@@ -13,28 +13,34 @@ function GetRoom() {
 
   const navigate = useNavigate();
 
-  // const fetchRooms = async () => {
-  //   const response = await fetch("http://localhost:8080/api/hostel/rooms");
-  //   const data = await response.json();
-  //   // console.log(data)
-  //   setRooms(data);
-  // }
-
   useEffect(() => {
-    // fetchRooms();
-    
-    let newRoomsData = roomsData;
-    if (acFilter != "DEFAULT") {
-      newRoomsData = newRoomsData.filter(room => room.ac == (acFilter == "true"))
+    const fetchRooms = async () => {
+      if (!token) return;
+      let url = "http://localhost:8080/api/hostel/rooms"
+      if (acFilter != "DEFAULT" || floorFilter != "DEFAULT" || bedsFilter != "DEFAULT") {
+        url += "?"
+      }
+      if (acFilter != "DEFAULT") {
+        url += `&ac=${acFilter}`
+      }
+      if (floorFilter != "DEFAULT") {
+        url += `&floor=${floorFilter}`
+      }
+      if (bedsFilter != "DEFAULT") {
+        url += `&beds=${bedsFilter}`
+      }
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      console.log(data)
+      setRooms(data.data);
     }
-    if (floorFilter != "DEFAULT") {
-      newRoomsData = newRoomsData.filter(room => room.floorNo == floorFilter)
-    }
-    if (bedsFilter != "DEFAULT") {
-      newRoomsData = newRoomsData.filter(room => room.numberOfBeds == bedsFilter)
-    }
-    setRooms(newRoomsData);
-
+    fetchRooms();
   }, [acFilter, floorFilter, bedsFilter])
 
   const handleGetRoom = (roomId) => {

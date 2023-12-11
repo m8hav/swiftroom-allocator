@@ -1,0 +1,15 @@
+admin dashboard options:
+
+  view all rooms with full details
+  view all students with full details
+  view all students in hostel with full details
+  add room
+  add student
+  delete room
+  delete student
+  allocate room to student
+  deallocate room from student
+  view all allocated rooms
+  change room of student
+  update room details
+  update student details

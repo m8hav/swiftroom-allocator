@@ -23,8 +23,8 @@ function HostelOptions() {
   return (
     <>
       <button onClick={handleGetRoom} className="btn btn-outline-primary w-1/3" disabled={currentUser.hosteller}>Get Hostel Room</button>
-      <button onClick={handleChangeRoom} className="btn btn-outline-primary w-1/3" disabled={!currentUser.hosteller}>Change Room</button>
-      <button onClick={handleLeaveHostel} className="btn btn-outline-primary w-1/3" disabled={!currentUser.hosteller}>Leave Hostel</button>
+      <button onClick={handleChangeRoom} className="btn btn-outline-success w-1/3" disabled={!currentUser.hosteller}>Change Room</button>
+      <button onClick={handleLeaveHostel} className="btn btn-outline-danger w-1/3" disabled={!currentUser.hosteller}>Leave Hostel</button>
     </>
   )
 }

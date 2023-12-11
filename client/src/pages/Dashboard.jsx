@@ -1,20 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useContext } from "react";
 import ProtectedRoute from "../ProtectedRoute"
 import StudentDashboard from "../components/StudentDashboard"
 import { AuthContext } from "../contexts/AuthContext";
 import AdminDashboard from "../components/AdminDashboard";
-import InfoPanel from '../components/UserInfoPanel';
 import { Route, Routes } from 'react-router-dom';
-import EditUserInfo from '../components/EditUserInfoPanel';
+import EditStudentInfoPanel from '../components/EditStudentInfoPanel';
+import EditAdminInfoPanel from '../components/EditAdminInfoPanel';
+import { getUserDetails } from '../utils/auth';
 
 function Dashboard() {
-  const { currentUser } = useContext(AuthContext);
-
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  
   const MainDashboard = () => {
     return (
       <>
-        <InfoPanel />
         {
           currentUser?.type.toLowerCase() == "student"
             ? <StudentDashboard />
@@ -25,12 +25,17 @@ function Dashboard() {
   }
 
   return (
-    <ProtectedRoute>
-      <Routes>
-        <Route path='*' element={<MainDashboard />} />
-        <Route path='edit-user-info' element={<EditUserInfo />} />
-      </Routes>
-    </ProtectedRoute>
+    <div className='flex justify-around items-center w-full h-full'>
+      <ProtectedRoute>
+        <Routes>
+          <Route path='*' element={<MainDashboard />} />
+          <Route path='edit-user-info' element={
+            currentUser.type === "student"
+              ? <EditStudentInfoPanel />
+              : <EditAdminInfoPanel />} />
+        </Routes>
+      </ProtectedRoute>
+    </div>
   )
 }
 

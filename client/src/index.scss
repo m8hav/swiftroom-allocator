@@ -28,9 +28,9 @@ body {
 
 table {
   tr {
-    &:nth-child(odd) {
-      background-color: #eee;
-    }
+    // &:nth-child(odd) {
+    //   background-color: #eee;
+    // }
 
     td {
 
@@ -47,6 +47,7 @@ table {
         width: 100%;
         background-color: transparent;
         padding: 2px 10px;
+        border: 1px solid #ccc;
       }
     }
   }

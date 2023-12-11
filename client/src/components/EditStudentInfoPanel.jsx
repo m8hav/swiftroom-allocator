@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { AuthContext } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-function EditUserInfo() {
+function EditStudentInfoPanel() {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   const [name, setName] = useState(currentUser.name)
@@ -94,4 +94,4 @@ function EditUserInfo() {
   )
 }
 
-export default EditUserInfo
+export default EditStudentInfoPanel

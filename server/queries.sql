@@ -35,8 +35,8 @@ CREATE TABLE hostel_rooms (
 
 CREATE TABLE hostel_allocation (
   allocation_id INT PRIMARY KEY AUTO_INCREMENT,
-  student_id BIGINT,
-  room_id INT,
+  student_id BIGINT NOT NULL,
+  room_id INT NOT NULL,
   allocation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   leave_date TIMESTAMP,
   FOREIGN KEY (student_id) REFERENCES hostel_students(student_id),
@@ -44,6 +44,7 @@ CREATE TABLE hostel_allocation (
 );
 
 desc students;
+desc hostel_admins;
 desc hostel_students;
 desc hostel_rooms;
 desc hostel_allocation;

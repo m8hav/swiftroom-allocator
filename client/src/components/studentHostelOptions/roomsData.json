@@ -1,0 +1,93 @@
+[
+  {
+    "room_id": 1,
+    "floor": 1,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": true
+  },
+  {
+    "room_id": 2,
+    "floor": 1,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": true
+  },
+  {
+    "room_id": 3,
+    "floor": 1,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": true
+  },
+  {
+    "room_id": 4,
+    "floor": 1,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": true
+  },
+  {
+    "room_id": 5,
+    "floor": 1,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": true
+  },
+  {
+    "room_id": 6,
+    "floor": 1,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": true
+  },
+  {
+    "room_id": 7,
+    "floor": 1,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": true
+  },
+  {
+    "room_id": 8,
+    "floor": 1,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": true
+  },
+  {
+    "room_id": 9,
+    "floor": 1,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": false
+  },
+  {
+    "room_id": 10,
+    "floor": 1,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": false
+  },
+  {
+    "room_id": 11,
+    "floor": 2,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": false
+  },
+  {
+    "room_id": 12,
+    "floor": 2,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": false
+  },
+  {
+    "room_id": 13,
+    "floor": 2,
+    "beds": 2,
+    "availableBeds": 1,
+    "ac": false
+  }
+]
