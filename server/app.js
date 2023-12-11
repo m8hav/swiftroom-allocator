@@ -135,8 +135,8 @@ app.put('/api/hostel/admins/:id', authenticateToken, async (req, res) => {
 });
 
 // Remove admin from hostel
-app.delete('/api/hostel/admins/:id', async (req, res) => {
-  if (req.user.id != req.params.id || req.user.type !== "admin") {
+app.delete('/api/hostel/admins/:id', authenticateToken, async (req, res) => {
+  if (req.user.id != req.params.id && req.user.type !== "admin") {
     return res.status(403).json({ message: 'Forbidden' });
   }
   const result = await removeAdminFromHostel(req.params.id);

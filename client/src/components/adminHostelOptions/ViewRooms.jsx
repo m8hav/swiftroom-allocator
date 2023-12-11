@@ -73,6 +73,7 @@ function ViewRooms() {
         </select>
         <select value={bedsFilter} onChange={e => setBedsFilter(e.target.value)} className='border border-gray-400 rounded-md'>
           <option value="DEFAULT">Any number of beds</option>
+          <option value="1">1 Bed</option>
           <option value="2">2 Beds</option>
           <option value="3">3 Beds</option>
           <option value="4">4 Beds</option>

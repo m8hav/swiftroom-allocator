@@ -386,6 +386,9 @@ export async function removeStudentFromHostel(studentId) {
       };
     }
 
+    // Remove the student from hostel_allocation table
+    await pool.query('DELETE FROM hostel_allocation WHERE student_id = ?', [studentId])
+
     // Remove the student from the hostel
     await pool.query('DELETE FROM hostel_students WHERE student_id = ?', [studentId]);
 

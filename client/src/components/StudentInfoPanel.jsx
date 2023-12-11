@@ -12,8 +12,9 @@ function StudentInfoPanel() {
     navigate("/dashboard/edit-user-info")
   }
 
-  const handleDeleteHostelAccount = () => {
+  const handleDeleteStudentHostelAccount = () => {
     console.log("Delete hostel account")
+    navigate("/dashboard/delete-student-hostel-account")
   }
 
   return (
@@ -31,6 +32,14 @@ function StudentInfoPanel() {
           </tr>
           <tr>
             <td>
+              <p>User Type:</p>
+            </td>
+            <td>
+              <p>{currentUser.type}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
               <p>Name:</p>
             </td>
             <td>
@@ -39,10 +48,18 @@ function StudentInfoPanel() {
           </tr>
           <tr>
             <td>
-              <p>Batch:</p>
+              <p>Email:</p>
             </td>
             <td>
-              <p>{currentUser.batch}</p>
+              <p>{currentUser.email}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Phone:</p>
+            </td>
+            <td>
+              <p>{currentUser.phone}</p>
             </td>
           </tr>
           <tr>
@@ -77,14 +94,17 @@ function StudentInfoPanel() {
               <p>{currentUser.registeredInHostel ? "Yes" : "No"}</p>
             </td>
           </tr>
-          <tr>
-            <td>
-              <p>Room Allocated</p>
-            </td>
-            <td>
-              <p>{currentUser.roomAllocated ? "Yes" : "No"}</p>
-            </td>
-          </tr>
+          {
+            currentUser.registeredInHostel &&
+            <tr>
+              <td>
+                <p>Room Allocated</p>
+              </td>
+              <td>
+                <p>{currentUser.roomAllocated ? "Yes" : "No"}</p>
+              </td>
+            </tr>
+          }
           {
             currentUser.roomAllocated &&
             <tr>
@@ -92,14 +112,14 @@ function StudentInfoPanel() {
                 <p>Room:</p>
               </td>
               <td>
-                <p>{currentUser.roomDetails.roomId}</p>
+                <p>{currentUser.roomDetails.room_id}</p>
               </td>
             </tr>
           }
         </tbody>
       </table>
       <button onClick={handleEditUserInfo} className='btn btn-outline-primary mt-4'>Edit User Info</button>
-      <button onClick={handleDeleteHostelAccount} className='btn btn-outline-danger mt-4'>Delete Hostel Account</button>
+      <button onClick={handleDeleteStudentHostelAccount} className='btn btn-outline-danger mt-4'>Delete Student Hostel Account</button>
     </div>
   )
 }

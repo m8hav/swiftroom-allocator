@@ -11,7 +11,11 @@ function GetRoom() {
   const [floorFilter, setFloorFilter] = useState("DEFAULT")
   const [bedsFilter, setBedsFilter] = useState("DEFAULT")
 
+  const [errMsg, setErrMsg] = useState("")
+  
   const navigate = useNavigate();
+
+  const { token } = currentUser;
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -41,16 +45,36 @@ function GetRoom() {
       setRooms(data.data);
     }
     fetchRooms();
-  }, [acFilter, floorFilter, bedsFilter])
+  }, [floorFilter, acFilter, bedsFilter])
 
   const handleGetRoom = (roomId) => {
     console.log("Get room", roomId)
-    setCurrentUser({
-      ...currentUser,
-      room: roomId,
-      hosteller: true
-    })
-    navigate("/dashboard")
+
+    const getRoom = async () => {
+      const response = await fetch(`http://localhost:8080/api/hostel/students/${currentUser.student_id}/room`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${currentUser.token}`
+        },
+        body: JSON.stringify({ roomId })
+      });
+      const data = await response.json();
+      console.log(data)
+      if (data.success) {
+        setCurrentUser({
+          ...currentUser,
+          roomAllocated: data.data.roomAllocated,
+          roomDetails: data.data.roomDetails
+        })
+        navigate("/dashboard")
+      } else {
+        console.log(data.message)
+        setErrMsg(data.message)
+        alert(data.message)
+      }
+    }
+    getRoom();
   }
 
   const handleClearFilters = () => {
@@ -78,6 +102,7 @@ function GetRoom() {
         </select>
         <select value={bedsFilter} onChange={e => setBedsFilter(e.target.value)} className='border border-gray-400 rounded-md'>
           <option value="DEFAULT">Any number of beds</option>
+          <option value="1">1 Bed</option>
           <option value="2">2 Beds</option>
           <option value="3">3 Beds</option>
           <option value="4">4 Beds</option>

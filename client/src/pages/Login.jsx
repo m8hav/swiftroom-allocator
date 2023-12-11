@@ -47,8 +47,9 @@ function Login() {
         if (res2.ok) {
           const data2 = await res2.json()
           console.log(data2)
-          setCurrentUser({ ...(data2.data), type, token: data.token })
-          saveUserDetails({ ...(data2.data), type, token: data.token })
+          const fullUserDetails = { ...(data2.data), type, token: data.token }
+          setCurrentUser(fullUserDetails)
+          saveUserDetails(fullUserDetails)
           navigate('/dashboard')
         }
       }

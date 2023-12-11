@@ -8,6 +8,7 @@ import { Route, Routes } from 'react-router-dom';
 import EditStudentInfoPanel from '../components/EditStudentInfoPanel';
 import EditAdminInfoPanel from '../components/EditAdminInfoPanel';
 import { getUserDetails } from '../utils/auth';
+import DeleteStudentHostelAccount from '../components/studentHostelOptions/DeleteStudentHostelAccount';
 
 function Dashboard() {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
@@ -29,6 +30,7 @@ function Dashboard() {
       <ProtectedRoute>
         <Routes>
           <Route path='*' element={<MainDashboard />} />
+          <Route path='delete-student-hostel-account' element={<DeleteStudentHostelAccount />} />
           <Route path='edit-user-info' element={
             currentUser.type === "student"
               ? <EditStudentInfoPanel />

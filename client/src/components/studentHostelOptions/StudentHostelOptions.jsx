@@ -7,24 +7,32 @@ function HostelOptions() {
   const navigate = useNavigate();
 
   const handleGetRoom = () => {
-    navigate("/dashboard/getRoom")
+    navigate("/dashboard/get-room")
     console.log("Getting room")
   }
 
   const handleChangeRoom = () => {
-    navigate("/dashboard/changeRoom")
+    navigate("/dashboard/change-room")
     console.log("Changing room")
   }
 
-  const handleLeaveHostel = () => {
-    navigate("/dashboard/leaveHostel")
-    console.log("Leaving hostel")
+  const handleLeaveRoom = () => {
+    navigate("/dashboard/leave-room")
+    console.log("Leaving room")
   }
   return (
     <>
-      <button onClick={handleGetRoom} className="btn btn-outline-primary w-1/3" disabled={currentUser.hosteller}>Get Hostel Room</button>
-      <button onClick={handleChangeRoom} className="btn btn-outline-success w-1/3" disabled={!currentUser.hosteller}>Change Room</button>
-      <button onClick={handleLeaveHostel} className="btn btn-outline-danger w-1/3" disabled={!currentUser.hosteller}>Leave Hostel</button>
+      {!(currentUser.roomAllocated) &&
+        <button onClick={handleGetRoom} className="btn btn-outline-primary w-1/3">Get Room</button>
+      }
+      {
+        currentUser.roomAllocated &&
+        <button onClick={handleChangeRoom} className="btn btn-outline-success w-1/3">Change Room</button>
+      }
+      {
+        currentUser.roomAllocated &&
+        <button onClick={handleLeaveRoom} className="btn btn-outline-danger w-1/3">Leave Room</button>
+      }
     </>
   )
 }

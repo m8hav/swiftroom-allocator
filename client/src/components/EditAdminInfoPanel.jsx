@@ -1,12 +1,15 @@
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { saveUserDetails } from '../utils/auth';
 
 function EditAdminInfoPanel() {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   const [name, setName] = useState(currentUser.name)
   const [email, setEmail] = useState(currentUser.email)
+
+  const { type, token } = currentUser
 
   const navigate = useNavigate();
 
@@ -16,16 +19,30 @@ function EditAdminInfoPanel() {
   }
 
   const handleSaveChanges = () => {
-    setCurrentUser({
-      ...currentUser,
-      name,
-      batch,
-      course,
-      branch,
-      city,
-      state
-    })
-    console.log("Edited user info")
+
+    const saveChanges = async () => {
+      // put request to update admin details
+      const response = await fetch(`http://localhost:8080/api/hostel/admins/${currentUser.hostel_admin_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${currentUser.token}`
+        },
+        body: JSON.stringify({
+          name,
+          email
+        })
+      });
+      const data = await response.json();
+      console.log(data.data)
+      const fullUserDetails = { ...(data.data), type, token }
+      setCurrentUser(fullUserDetails)
+      saveUserDetails(fullUserDetails)
+    }
+
+    saveChanges();
+
+    console.log("Edited admin info")
     handleBackToDashboard()
   }
 

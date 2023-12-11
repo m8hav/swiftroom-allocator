@@ -11,6 +11,7 @@ import AddStudent from './adminHostelOptions/AddStudent';
 import RemoveStudent from './adminHostelOptions/RemoveStudent';
 import AdminInfoPanel from './AdminInfoPanel';
 import Room from './adminHostelOptions/Room';
+import ViewStudentsInHostel from './adminHostelOptions/ViewStudentsInHostel';
 
 function AdminDashboard() {
   let { pathname } = useLocation();
@@ -29,6 +30,7 @@ function AdminDashboard() {
               <Route path='/hostel/room/:id' element={<Room />} />
               <Route path='/hostel/viewRooms' element={<ViewRooms />} />
               <Route path='/hostel/viewAllStudents' element={<ViewAllStudents />} />
+              <Route path='/hostel/viewStudentsInHostel' element={<ViewStudentsInHostel />} />
               <Route path='/hostel/viewAllAllocatedRooms' element={<ViewAllAllocatedRooms />} />
               <Route path='/hostel/addRoom' element={<AddRoom />} />
               <Route path='/hostel/removeRoom' element={<RemoveRoom />} />

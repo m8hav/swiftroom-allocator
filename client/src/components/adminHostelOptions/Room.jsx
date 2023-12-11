@@ -4,18 +4,12 @@ import { getUserDetails } from '../../utils/auth';
 import { useParams } from 'react-router-dom';
 
 function Room() {
-
   let { id } = useParams();
-
   const { currentUser, setCurrentUser } = useContext(AuthContext);
-
   const { token } = currentUser;
-
   const [room, setRoom] = useState({})
 
   useEffect(() => {
-    console.log(`http://localhost:8080/api/hostel/rooms/${id}`);
-
     const fetchRoom = async () => {
       const response = await fetch(`http://localhost:8080/api/hostel/rooms/${id}`, {
         method: "GET",

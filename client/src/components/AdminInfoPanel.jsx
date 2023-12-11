@@ -12,8 +12,21 @@ function AdminInfoPanel() {
     navigate("/dashboard/edit-user-info")
   }
 
-  const handleDeleteHostelAccount = () => {
-    console.log("Delete hostel account")
+  const handleDeleteAdminAccount = () => {
+    const deleteAdminAccount = async () => {
+      const response = await fetch(`http://localhost:8080/api/hostel/admins/${currentUser.hostel_admin_id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${currentUser.token}`
+        }
+      });
+      const data = await response.json();
+      console.log(data)
+    }
+    deleteAdminAccount();
+    navigate("/logout")
+    console.log("Delete admin account")
   }
 
   return (
@@ -59,7 +72,7 @@ function AdminInfoPanel() {
         </tbody>
       </table>
       <button onClick={handleEditUserInfo} className='btn btn-outline-primary mt-4'>Edit User Info</button>
-      <button onClick={handleDeleteHostelAccount} className='btn btn-outline-danger mt-4'>Delete Hostel Account</button>
+      <button onClick={handleDeleteAdminAccount} className='btn btn-outline-danger mt-4'>Delete Admin Account</button>
     </div>
   )
 }
