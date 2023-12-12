@@ -11,7 +11,7 @@ function GetRoom() {
   const [bedsFilter, setBedsFilter] = useState("DEFAULT")
 
   const [errMsg, setErrMsg] = useState("")
-  
+
   const navigate = useNavigate();
 
   const { token } = currentUser;
@@ -45,6 +45,11 @@ function GetRoom() {
     }
     fetchRooms();
   }, [floorFilter, acFilter, bedsFilter])
+
+  const handleViewRoom = (roomId) => {
+    console.log("View room", roomId)
+    navigate("/dashboard/hostel/room/" + roomId)
+  }
 
   const handleGetRoom = (roomId) => {
     console.log("Get room", roomId)
@@ -155,7 +160,10 @@ function GetRoom() {
                   </td>
                 </tr>
                 <tr>
-                  <td colSpan={2} className='flex justify-center'>
+                  <td className='flex justify-center'>
+                    <button onClick={() => handleViewRoom(room.room_id)} className='btn btn-outline-primary m-auto'>View Room</button>
+                  </td>
+                  <td className='flex justify-center'>
                     <button onClick={() => handleGetRoom(room.room_id)} className='btn btn-outline-primary m-auto'>Get Room</button>
                   </td>
                 </tr>

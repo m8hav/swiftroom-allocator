@@ -813,7 +813,7 @@ export async function getAllStudentsInHostel() {
   }
 }
 
-// Function to get all rooms with filters
+// Function to get all rooms, with optional filters
 export async function getAllRoomsDetails(filters = {}, showStudentPrivateDetails = false) {
   // option to show only allocated rooms
   const { floor, beds, ac, bedsAvailable, allocated } = filters;

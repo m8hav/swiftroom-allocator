@@ -65,7 +65,7 @@ function HostelOptions() {
     <>
       <button onClick={handleViewRooms} className="btn btn-outline-primary w-1/3">View Rooms</button>
       <button onClick={handleViewAllStudents} className="btn btn-outline-primary w-1/3">View All Students</button>
-      <button onClick={handleViewStudentsInHostel} className="btn btn-outline-primary w-1/3">View Students in Hostel</button>
+      <button onClick={handleViewStudentsInHostel} className="btn btn-outline-primary w-1/3">View Students in Hostel System</button>
       <button onClick={handleAllocateRoom} className="btn btn-outline-primary w-1/3">Allocate Room to Student</button>
       {/* <button onClick={handleViewAllAllocatedRooms} className="btn btn-outline-primary w-1/3">View All Allocated Rooms</button> */}
       <button onClick={handleAddRoom} className="btn btn-outline-success w-1/3">Add Room</button>

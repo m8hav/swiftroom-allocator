@@ -27,7 +27,7 @@ function ViewStudentsInHostel() {
 
   return (
     <>
-      <h2 className='font-bold'>Students in Hostel</h2>
+      <h2 className='font-bold'>Students in Hostel System</h2>
       <div className='h-full overflow-y-auto'>
         {
           students &&

@@ -6,6 +6,7 @@ import GetRoom from './studentHostelOptions/GetRoom';
 import ChangeRoom from './studentHostelOptions/ChangeRoom';
 import LeaveRoom from './studentHostelOptions/LeaveRoom';
 import StudentInfoPanel from './StudentInfoPanel';
+import Room from './adminHostelOptions/Room';
 
 function StudentDashboard() {
   let { pathname } = useLocation();
@@ -21,6 +22,7 @@ function StudentDashboard() {
           <div className='flex flex-col gap-4 items-center h-5/6 w-full'>
             <Routes>
               <Route path='/' element={<StudentHostelOptions />} />
+              <Route path='/hostel/room/:id' element={<Room />} />
               <Route path='get-room' element={<GetRoom />} />
               <Route path='change-room' element={<ChangeRoom />} />
               <Route path='leave-room' element={<LeaveRoom />} />
