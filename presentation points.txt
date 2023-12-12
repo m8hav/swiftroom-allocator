@@ -1,0 +1,72 @@
+### Slide 1: Title
+- **Title:** SwiftRoom Allocator
+- **Subtitle:** Streamlining Hostel Room Allocation
+
+### Slide 2: Introduction
+- **Objective:** Simplify and expedite the hostel room allocation process for college students.
+
+### Slide 3: Core Features
+- **Instant Room Allocation:**
+  - Students can swiftly secure a room without a formal application process.
+- **CRUD Operations:**
+  - Create, Read, Update, and Delete functionalities for both admins and students.
+
+### Slide 4: Functionalities
+- **Create:**
+  - Register students in the hostel.
+  - Create a new room.
+- **Read:**
+  - Admins can read all rooms and students.
+  - Students can read their own room and all rooms without sensitive data.
+- **Update:**
+  - Admins can change a student's room, allot a room, and de-allot a room.
+  - Students can allot a room, leave a room, change a room, and update their information.
+- **Delete:**
+  - Admins can delete a student and a room.
+  - Students can delete themselves.
+
+### Slide 5: System Components
+- **Backend:** Node.js
+- **Database:** MySQL
+- **Frontend:** React
+- **Communication:** Express.js, Axios
+
+### Slide 6: Backend Implementation
+- **Express.js Setup:**
+  - Minimal setup for the server using Express.js.
+- **MySQL Database Schema:**
+  - Basic schema with tables for `students` and `rooms`.
+- **Routes and Controllers:**
+  - Define routes for CRUD operations.
+- **Database Operations:**
+  - Functions to interact with MySQL for each CRUD operation.
+
+### Slide 7: Frontend Implementation
+- **Pages:**
+  - Register/Login, Dashboard, Room Selection, Change Room, Leave Hostel.
+- **Simple UI:**
+  - Focus on core functionalities with a clean and minimal design.
+- **Responsive Design:**
+  - Ensuring usability across different devices.
+
+### Slide 8: Testing
+- **Postman:**
+  - Used for testing backend routes.
+- **User Testing:**
+  - Ensuring seamless functionality for end-users.
+
+### Slide 9: Future Enhancements
+- **Frontend Authentication Saving:**
+  - For security, consider adding basic authentication.
+- **Additional Features:**
+  - Based on user feedback and requirements.
+
+### Slide 10: Conclusion
+- **Achievements:**
+  - Streamlined hostel room allocation.
+  - Allowing students to choose rooms based on their preferences
+- **Next Steps:**
+  - Deployment, user feedback, and potential enhancements.
+
+### Slide 11: Q&A
+- **Invite questions from the audience.**
