@@ -637,6 +637,30 @@ export async function getRoomDetails(roomId, showStudentPrivateDetails = false) 
   }
 }
 
+// Function to get all available rooms
+export async function getAllAvailableRooms() {
+  try {
+    // Get all rooms
+    const [rooms] = await pool.query('SELECT * FROM hostel_rooms');
+
+    // Get details for each room
+    const roomsDetails = await Promise.all(rooms.map(async (room) => {
+      return (await getRoomDetails(room.room_id)).data;
+    }));
+
+    return {
+      success: true,
+      data: roomsDetails.filter(room => room.availableBeds > 0)
+    };
+  } catch (error) {
+    console.error('Error in getAllAvailableRooms:', error.message);
+    return {
+      success: false,
+      message: 'Something went wrong.'
+    };
+  }
+}
+
 // Function to get the room of a student
 export async function getStudentRoom(studentId) {
   try {
